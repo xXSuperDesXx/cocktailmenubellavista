@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Cocktail - Agriturismo [Nome Agriturismo]</title>
+    <title>Menu Cocktail - Agriturismo Bellavista</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -306,12 +306,24 @@
             buttonElement.disabled = true; // Disabilita il pulsante durante il caricamento
 
             try {
+                // *** IMPORTANTE: INSERISCI QUI LA TUA API KEY DI GEMINI ***
+                // Puoi ottenerla dalla Google Cloud Console.
+                // Assicurati che l'API Gemini sia abilitata per il tuo progetto
+                // e che la chiave API sia configurata per consentire richieste dal dominio di GitHub Pages (es. yourusername.github.io).
+                const apiKey = "AIzaSyDovv4yPViuYDZfekDXt8lit57z2Tt7T6g"; // La tua API key è stata inserita qui
+
+                if (!apiKey || apiKey === "YOUR_GEMINI_API_KEY_HERE") { // Ho mantenuto il controllo per la stringa placeholder
+                    descriptionElement.textContent = 'Errore: API Key di Gemini non configurata. Inserisci la tua chiave API nel codice JavaScript.';
+                    descriptionElement.classList.remove('hidden');
+                    console.error('API Key di Gemini mancante o non valida.');
+                    return; // Esci dalla funzione se la chiave non è configurata
+                }
+
                 let chatHistory = [];
-                const prompt = `Fornisci una breve curiosità, una storia o una descrizione interessante sul cocktail "${cocktailName}". Sii conciso e coinvolgente.`;
+                const prompt = `Fornisci una breve curiosità, una storia o una descrizione interessante sul cocktail "${cocktailName}". Sii conciso e coinvolgente. Rispondi in italiano.`;
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // L'API key verrà fornita automaticamente dall'ambiente Canvas
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -329,12 +341,12 @@
                     descriptionElement.textContent = text;
                     descriptionElement.classList.remove('hidden'); // Mostra la descrizione
                 } else {
-                    descriptionElement.textContent = 'Non è stato possibile recuperare informazioni per questo cocktail. Riprova più tardi.';
+                    descriptionElement.textContent = 'Non è stato possibile recuperare informazioni per questo cocktail. Controlla la console per i dettagli (potrebbe essere un problema di API Key o CORS).';
                     descriptionElement.classList.remove('hidden');
                     console.error('Risposta API Gemini inattesa:', result);
                 }
             } catch (error) {
-                descriptionElement.textContent = 'Si è verificato un errore durante il recupero delle informazioni. Riprova più tardi.';
+                descriptionElement.textContent = 'Si è verificato un errore durante il recupero delle informazioni. Controlla la console per i dettagli (potrebbe essere un problema di rete o CORS).';
                 descriptionElement.classList.remove('hidden');
                 console.error('Errore durante la chiamata API Gemini:', error);
             } finally {
