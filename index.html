@@ -9,13 +9,15 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* Colore di sfondo tenue verde/teal */
             background-color: #F0FDF4; /* green-50 */
         }
         .card {
             background-color: #FFFFFF; /* Bianco puro per le schede */
             border-radius: 1rem; /* rounded-xl */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            /* La padding verrà applicata al div interno per i contenuti testuali quando c'è un'immagine */
+        }
+        .card-content {
             padding: 1.5rem; /* p-6 */
         }
         .section-title {
@@ -72,6 +74,13 @@
             font-style: italic;
             font-size: 0.95rem;
         }
+        .cocktail-image {
+            width: 100%;
+            height: 200px; /* Altezza fissa per l'immagine, puoi regolarla */
+            object-fit: cover; /* Assicura che l'immagine copra lo spazio senza distorsioni */
+            border-top-left-radius: 1rem; /* Arrotonda gli angoli superiori per abbinare la card */
+            border-top-right-radius: 1rem;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -84,129 +93,165 @@
                 Agriturismo Bellavista
             </p>
             <p class="text-md md:text-lg text-green-700 mt-4">
-                Scopri le nostre selezioni di cocktail, perfette per ogni momento.
+                Scopri le nostre selezioni di cocktail e taglieri, perfette per ogni momento.
             </p>
         </header>
 
         <section class="mb-10">
             <h2 class="text-3xl font-bold section-title">Cocktail Classici</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Gin Tonic</h3>
-                        <span class="text-lg cocktail-price">€ 6,00</span>
+                <!-- Gin Tonic -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/GIN%20TONIC.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Gin Tonic</h3>
+                            <span class="text-lg cocktail-price">€ 6,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Gin, Tonica
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Gin Tonic', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Gin, Tonica
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Gin Tonic', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Americano</h3>
-                        <span class="text-lg cocktail-price">€ 7,00</span>
+                <!-- Americano -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/AMERICANO.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Americano</h3>
+                            <span class="text-lg cocktail-price">€ 7,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Campari, Vermouth Rosso, Soda
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Americano', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Campari, Vermouth Rosso, Soda
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Americano', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Negroni</h3>
-                        <span class="text-lg cocktail-price">€ 7,00</span>
+                <!-- Negroni -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/negroni.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Negroni</h3>
+                            <span class="text-lg cocktail-price">€ 7,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Gin, Campari, Vermouth Rosso
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Negroni', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Gin, Campari, Vermouth Rosso
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Negroni', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Spritz</h3>
-                        <span class="text-lg cocktail-price">€ 5,00</span>
+                <!-- Spritz -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/5867319b202a888874a676106a2fc59b8e667532/immagini/APEROL%20SPRITZ2.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Spritz</h3>
+                            <span class="text-lg cocktail-price">€ 5,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Aperol/Campari, Prosecco, Soda
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Spritz', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Aperol/Campari, Prosecco, Soda
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Spritz', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Mojito</h3>
-                        <span class="text-lg cocktail-price">€ 8,00</span>
+                <!-- Mojito -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/MOJITO.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Mojito</h3>
+                            <span class="text-lg cocktail-price">€ 8,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Rum Bianco, Menta, Lime, Zucchero di Canna, Soda
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Mojito', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Rum Bianco, Menta, Lime, Zucchero di Canna, Soda
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Mojito', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Martini Dry</h3>
-                        <span class="text-lg cocktail-price">€ 7,00</span>
+                <!-- Martini Dry -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/martini%20dry.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Martini Dry</h3>
+                            <span class="text-lg cocktail-price">€ 7,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Gin, Vermouth Dry
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Martini Dry', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Gin, Vermouth Dry
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Martini Dry', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Hugo</h3>
-                        <span class="text-lg cocktail-price">€ 6,00</span>
+                 <!-- Hugo -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/HUGO.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Hugo</h3>
+                            <span class="text-lg cocktail-price">€ 6,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Prosecco, Sciroppo di Fiori di Sambuco, Menta, Soda
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Hugo', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Prosecco, Sciroppo di Fiori di Sambuco, Menta, Soda
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Hugo', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Daiquiri</h3>
-                        <span class="text-lg cocktail-price">€ 6,00</span>
+                <!-- Daiquiri -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/Daiquiri.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Daiquiri</h3>
+                            <span class="text-lg cocktail-price">€ 6,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Rum Bianco, Succo di Lime, Sciroppo di Zucchero
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Daiquiri', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Rum Bianco, Succo di Lime, Sciroppo di Zucchero
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Daiquiri', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Cuba Libre</h3>
-                        <span class="text-lg cocktail-price">€ 6,00</span>
+                <!-- Cuba Libre -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/cuba%20libre.jpeg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Cuba Libre</h3>
+                            <span class="text-lg cocktail-price">€ 6,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Rum Bianco, Coca-Cola, Succo di Lime
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Cuba Libre', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Rum Bianco, Coca-Cola, Succo di Lime
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Cuba Libre', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
             </div>
         </section>
@@ -214,57 +259,73 @@
         <section class="mb-10">
             <h2 class="text-3xl font-bold section-title">Cocktail Speciali</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Golden Gin Tonic <span class="text-base font-normal">(zafferano)</span></h3>
-                        <span class="text-lg cocktail-price">€ 9,00</span>
+                <!-- Golden Gin Tonic -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/A7F3D0/065F46?text=Golden+Gin+Tonic" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Golden Gin Tonic <span class="text-base font-normal">(zafferano)</span></h3>
+                            <span class="text-lg cocktail-price">€ 9,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Gin, Tonica, Zafferano
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Golden Gin Tonic', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Gin, Tonica, Zafferano
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Golden Gin Tonic', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Negroni Sbagliato</h3>
-                        <span class="text-lg cocktail-price">€ 7,00</span>
+                <!-- Negroni Sbagliato -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/A7F3D0/065F46?text=Negroni+Sbagliato" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Negroni Sbagliato</h3>
+                            <span class="text-lg cocktail-price">€ 7,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Spumante, Campari, Vermouth Rosso
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Negroni Sbagliato', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Spumante, Campari, Vermouth Rosso
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Negroni Sbagliato', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Sex on The Beach</h3>
-                        <span class="text-lg cocktail-price">€ 7,00</span>
+                <!-- Sex on The Beach -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/A7F3D0/065F46?text=Sex+on+The+Beach" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Sex on The Beach</h3>
+                            <span class="text-lg cocktail-price">€ 7,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Vodka, Peach Schnapps, Succo d'Arancia, Succo di Mirtillo Rosso
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Sex on The Beach', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Vodka, Peach Schnapps, Succo d'Arancia, Succo di Mirtillo Rosso
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Sex on The Beach', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Gin Fizz</h3>
-                        <span class="text-lg cocktail-price">€ 7,00</span>
+                 <!-- Gin Fizz -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/A7F3D0/065F46?text=Gin+Fizz" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Gin Fizz</h3>
+                            <span class="text-lg cocktail-price">€ 7,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Gin, Succo di Limone, Sciroppo di Zucchero, Soda
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Gin Fizz', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Gin, Succo di Limone, Sciroppo di Zucchero, Soda
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Gin Fizz', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
             </div>
         </section>
@@ -272,21 +333,86 @@
         <section class="mb-10">
             <h2 class="text-3xl font-bold section-title">Cocktail Analcolici</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-xl cocktail-name">Analcolico alla frutta</h3>
-                        <span class="text-lg cocktail-price">€ 7,00</span>
+                <!-- Analcolico alla frutta -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/A7F3D0/065F46?text=Analcolico+alla+Frutta" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Analcolico alla frutta</h3>
+                            <span class="text-lg cocktail-price">€ 7,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Ingredienti:</span> Succhi di frutta misti, Sciroppo, Soda
+                        </p>
+                        <button class="discover-button" onclick="getGeminiInfo('Analcolico alla frutta', this)">
+                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        </button>
+                        <p class="cocktail-description hidden"></p>
                     </div>
-                    <p class="cocktail-ingredients">
-                        <span class="font-medium">Ingredienti:</span> Succhi di frutta misti, Sciroppo, Soda
-                    </p>
-                    <button class="discover-button" onclick="getGeminiInfo('Analcolico alla frutta', this)">
-                        Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                    </button>
-                    <p class="cocktail-description hidden"></p>
                 </div>
             </div>
         </section>
+
+        <!-- Nuova Sezione Taglieri -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-bold section-title">I Nostri Taglieri</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tagliere Salumi -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/FCD34D/92400E?text=Tagliere+Salumi" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Tagliere di Salumi Misti</h3>
+                            <span class="text-lg cocktail-price">€ 15,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Descrizione:</span> Selezione di salumi locali di alta qualità, accompagnati da pane casereccio.
+                        </p>
+                        <!-- Potresti aggiungere un pulsante "Scopri di più" anche qui se vuoi usare Gemini per descrizioni -->
+                    </div>
+                </div>
+                <!-- Tagliere Formaggi -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/FCD34D/92400E?text=Tagliere+Formaggi" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Tagliere di Formaggi Stagionati</h3>
+                            <span class="text-lg cocktail-price">€ 18,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Descrizione:</span> Degustazione di formaggi stagionati del territorio, serviti con miele e confetture artigianali.
+                        </p>
+                    </div>
+                </div>
+                <!-- Tagliere Misto -->
+                <div class="card overflow-hidden">
+                    <img src="https://placehold.co/600x400/FCD34D/92400E?text=Tagliere+Misto" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Tagliere Misto Bellavista</h3>
+                            <span class="text-lg cocktail-price">€ 20,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Descrizione:</span> Un assaggio completo dei nostri migliori salumi e formaggi, con sottaceti e olive.
+                        </p>
+                    </div>
+                </div>
+                 <!-- Tagliere Vegetariano -->
+                <div class="card overflow-hidden">
+                    <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/bicchiere_felice.jpg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+                    <div class="card-content">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 class="text-xl cocktail-name">Tagliere Vegetariano</h3>
+                            <span class="text-lg cocktail-price">€ 16,00</span>
+                        </div>
+                        <p class="cocktail-ingredients">
+                            <span class="font-medium">Descrizione:</span> Selezione di verdure grigliate di stagione, formaggi freschi, olive e bruschette al pomodoro.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <footer class="text-center text-green-700 text-sm mt-10 pb-6">
             <p>&copy; 2025 Agriturismo Bellavista. Tutti i diritti riservati.</p>
@@ -307,20 +433,20 @@
 
             try {
                 // *** IMPORTANTE: INSERISCI QUI LA TUA API KEY DI GEMINI ***
-                // Puoi ottenerla dalla Google Cloud Console.
-                // Assicurati che l'API Gemini sia abilitata per il tuo progetto
-                // e che la chiave API sia configurata per consentire richieste dal dominio di GitHub Pages (es. yourusername.github.io).
-                const apiKey = "AIzaSyDovv4yPViuYDZfekDXt8lit57z2Tt7T6g"; // La tua API key è stata inserita qui
+                // La tua API key è stata inserita qui, ma assicurati che sia corretta e attiva.
+                const apiKey = "AIzaSyDovv4yPViuYDZfekDXt8lit57z2Tt7T6g"; 
 
-                if (!apiKey || apiKey === "YOUR_GEMINI_API_KEY_HERE") { // Ho mantenuto il controllo per la stringa placeholder
+                if (!apiKey || apiKey === "YOUR_GEMINI_API_KEY_HERE") { 
                     descriptionElement.textContent = 'Errore: API Key di Gemini non configurata. Inserisci la tua chiave API nel codice JavaScript.';
                     descriptionElement.classList.remove('hidden');
                     console.error('API Key di Gemini mancante o non valida.');
-                    return; // Esci dalla funzione se la chiave non è configurata
+                    spinner.classList.add('hidden');
+                    buttonElement.disabled = false;
+                    return; 
                 }
 
                 let chatHistory = [];
-                const prompt = `Fornisci una breve curiosità, una storia o una descrizione interessante sul cocktail "${cocktailName}". Sii conciso e coinvolgente. Rispondi in italiano.`;
+                const prompt = `Fornisci una breve curiosità, una storia o una descrizione interessante sul cocktail "${cocktailName}". Sii conciso e coinvolgente. Rispondi in italiano. Limita la risposta a 2-3 frasi.`;
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
                 const payload = { contents: chatHistory };
