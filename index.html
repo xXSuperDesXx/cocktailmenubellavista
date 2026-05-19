@@ -53,26 +53,21 @@
         .discover-button:hover {
             background-color: #059669; /* green-600 */
         }
-        .loading-spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #fff;
-            border-radius: 50%;
-            width: 1.5rem;
-            height: 1.5rem;
-            animation: spin 1s linear infinite;
-            margin-left: 0.5rem;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
         .cocktail-description {
             margin-top: 1rem;
-            padding-top: 1rem;
             border-top: 1px dashed #A7F3D0; /* green-200 */
             color: #065F46; /* green-800 */
             font-style: italic;
             font-size: 0.95rem;
+            /* Stili per animazione */
+            max-height: 0;
+            overflow: hidden;
+            padding-top: 0;
+            transition: max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out;
+        }
+        .cocktail-description.visible {
+            max-height: 200px; /* Altezza sufficiente per contenere il testo */
+            padding-top: 1rem;
         }
         .cocktail-image {
             width: 100%;
@@ -85,20 +80,29 @@
 </head>
 <body class="antialiased">
     <div class="container mx-auto p-4 md:p-8 lg:p-12 max-w-4xl">
+        <div class="flex justify-center mt-4 mb-2 space-x-4">
+            <button onclick="setLanguage('it')" id="btn-lang-it" class="px-5 py-2 bg-green-600 text-white rounded-full font-semibold shadow transition duration-300 ease-in-out focus:outline-none">ITA</button>
+            <button onclick="setLanguage('en')" id="btn-lang-en" class="px-5 py-2 bg-green-100 text-green-800 rounded-full font-semibold shadow transition duration-300 ease-in-out hover:bg-green-200 focus:outline-none">ENG</button>
+        </div>
         <header class="text-center mb-10 mt-6 md:mt-10">
             <h1 class="text-4xl md:text-5xl font-bold text-green-800 mb-2">
-                Menu Cocktail
+                <span data-lang="it">Menu Cocktail</span>
+                <span data-lang="en" class="hidden">Cocktail Menu</span>
             </h1>
             <p class="text-xl md:text-2xl text-green-600">
                 Agriturismo Bellavista
             </p>
             <p class="text-md md:text-lg text-green-700 mt-4">
-                Scopri le nostre selezioni di cocktail e taglieri, perfette per ogni momento.
+                <span data-lang="it">Scopri le nostre selezioni di cocktail e taglieri, perfette per ogni momento.</span>
+                <span data-lang="en" class="hidden">Discover our selection of cocktails and cold cuts boards, perfect for every moment.</span>
             </p>
         </header>
 
         <section class="mb-10">
-            <h2 class="text-3xl font-bold section-title">Cocktail Classici</h2>
+            <h2 class="text-3xl font-bold section-title">
+                <span data-lang="it">Cocktail Classici</span>
+                <span data-lang="en" class="hidden">Classic Cocktails</span>
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Gin Tonic -->
                 <div class="card overflow-hidden">
@@ -109,12 +113,19 @@
                             <span class="text-lg cocktail-price">€ 7,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Gin, Tonica
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Gin, Tonica</span>
+                            <span data-lang="en" class="hidden">Gin, Tonic Water</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Gin Tonic', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('gin-tonic', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-gin-tonic" class="cocktail-description">
+                            <p data-lang="it">Nato come medicinale per i soldati britannici in India per combattere la malaria, il Gin Tonic univa il gin alla china (contenuta nella tonica). Oggi è uno dei long drink più amati al mondo per la sua semplicità rinfrescante.</p>
+                            <p data-lang="en" class="hidden">Born as a medicine for British soldiers in India to fight malaria, the Gin Tonic combined gin with quinine (found in tonic water). Today, it is one of the most beloved long drinks in the world for its refreshing simplicity.</p>
+                        </div>
                     </div>
                 </div>
                 <!-- Americano -->
@@ -126,12 +137,19 @@
                             <span class="text-lg cocktail-price">€ 7,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Campari, Vermouth Rosso, Soda
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Campari, Vermouth Rosso, Soda</span>
+                            <span data-lang="en" class="hidden">Campari, Sweet Vermouth, Soda Water</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Americano', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('americano', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-americano" class="cocktail-description">
+                            <p data-lang="it">Creato in onore del pugile italiano Primo Carnera, detto 'l'Americano', questo cocktail è il padre del più celebre Negroni. La sua ricetta originale risale al 1860 ed è un classico intramontabile dell'aperitivo italiano.</p>
+                            <p data-lang="en" class="hidden">Created in honor of the Italian boxer Primo Carnera, known as 'the American', this cocktail is the predecessor of the more famous Negroni. Its original recipe dates back to 1860 and it remains a timeless classic of the Italian aperitivo.</p>
+                        </div>
                     </div>
                 </div>
                 <!-- Negroni -->
@@ -143,12 +161,19 @@
                             <span class="text-lg cocktail-price">€ 7,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Gin, Campari, Vermouth Rosso
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Gin, Campari, Vermouth Rosso</span>
+                            <span data-lang="en" class="hidden">Gin, Campari, Sweet Vermouth</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Negroni', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('negroni', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-negroni" class="cocktail-description">
+                            <p data-lang="it">La leggenda narra che sia nato a Firenze nel 1919, quando il Conte Camillo Negroni chiese al suo barista di 'rinforzare' il suo solito Americano sostituendo la soda con il gin. Il risultato è un cocktail iconico, potente ed equilibrato.</p>
+                            <p data-lang="en" class="hidden">Legend has it that it was born in Florence in 1919, when Count Camillo Negroni asked his bartender to 'strengthen' his usual Americano by replacing the soda with gin. The result is an iconic, powerful, and balanced cocktail.</p>
+                        </div>
                     </div>
                 </div>
                 <!-- Spritz -->
@@ -160,12 +185,19 @@
                             <span class="text-lg cocktail-price">€ 6,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Aperol/Campari, Prosecco, Soda
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Aperol/Campari, Prosecco, Soda</span>
+                            <span data-lang="en" class="hidden">Aperol/Campari, Prosecco, Soda Water</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Spritz', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('spritz', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-spritz" class="cocktail-description">
+                            <p data-lang="it">Le origini dello Spritz risalgono all'800, quando i soldati austriaci nel Regno Lombardo-Veneto 'spruzzavano' (spritzen, in tedesco) il vino locale con acqua per renderlo più leggero. Oggi è il simbolo dell'aperitivo italiano nel mondo.</p>
+                            <p data-lang="en" class="hidden">The origins of the Spritz date back to the 1800s, when Austrian soldiers in the Lombardy-Venetia Kingdom would 'spray' (spritzen, in German) the local wine with water to make it lighter. Today, it is the symbol of the Italian aperitivo worldwide.</p>
+                        </div>
                     </div>
                 </div>
                 <!-- Mojito 
@@ -245,12 +277,19 @@
                             <span class="text-lg cocktail-price">€ 6,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Rum Bianco, Coca-Cola, Succo di Lime
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Rum Bianco, Coca-Cola, Succo di Lime</span>
+                            <span data-lang="en" class="hidden">White Rum, Coca-Cola, Lime Juice</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Cuba Libre', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('cuba-libre', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-cuba-libre" class="cocktail-description">
+                            <p data-lang="it">Il suo nome significa 'Cuba Libera!' ed è un grido di battaglia della guerra d'indipendenza cubana. Nato all'Avana intorno al 1900, celebra l'unione tra il rum cubano e la Coca-Cola americana, simbolo della liberazione dall'influenza spagnola.</p>
+                            <p data-lang="en" class="hidden">Its name means 'Free Cuba!' and it's a battle cry from the Cuban War of Independence. Born in Havana around 1900, it celebrates the union of Cuban rum and American Coca-Cola, a symbol of liberation from Spanish influence.</p>
+                        </div>
                     </div>
                 </div>
                  <!-- Prosecco -->
@@ -258,16 +297,26 @@
                     <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/prosecco.jpg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
                     <div class="card-content">
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-xl cocktail-name">Bicchiere di Prosecco</h3>
+                            <h3 class="text-xl cocktail-name">
+                                <span data-lang="it">Bicchiere di Prosecco</span>
+                                <span data-lang="en" class="hidden">Glass of Prosecco</span>
+                            </h3>
                             <span class="text-lg cocktail-price">€ 5,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Prosecco
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Prosecco</span>
+                            <span data-lang="en" class="hidden">Prosecco</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Prosecco', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('prosecco', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-prosecco" class="cocktail-description">
+                            <p data-lang="it">Simbolo di festa e convivialità italiana, il Prosecco è un vino spumante prodotto principalmente nel Veneto e Friuli. Le sue bollicine fresche e fruttate lo rendono perfetto per ogni occasione, dall'aperitivo al brindisi celebrativo.</p>
+                            <p data-lang="en" class="hidden">A symbol of celebration and Italian conviviality, Prosecco is a sparkling wine produced mainly in Veneto and Friuli. Its fresh and fruity bubbles make it perfect for any occasion, from an aperitif to a celebratory toast.</p>
+                        </div>
                     </div>
                 </div>
                  <!-- Calice di vino -->
@@ -275,11 +324,17 @@
                     <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/calicevino.jpg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
                     <div class="card-content">
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-xl cocktail-name">Calice di Vino</h3>
+                            <h3 class="text-xl cocktail-name">
+                                <span data-lang="it">Calice di Vino</span>
+                                <span data-lang="en" class="hidden">Glass of Wine</span>
+                            </h3>
                             <span class="text-lg cocktail-price">€ 5,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Selezione di vini Toscani
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Selezione di vini Toscani</span>
+                            <span data-lang="en" class="hidden">Selection of Tuscan wines</span>
                         </p>
                         <!--<button class="discover-button" onclick="getGeminiInfo('Vino toscana', this)">
                             Scopri di più ✨ <span class="loading-spinner hidden"></span>
@@ -292,23 +347,37 @@
         </section>
 
         <section class="mb-10">
-            <h2 class="text-3xl font-bold section-title">Cocktail Speciali</h2>
+            <h2 class="text-3xl font-bold section-title">
+                <span data-lang="it">Cocktail Speciali</span>
+                <span data-lang="en" class="hidden">Special Cocktails</span>
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Golden Gin Tonic -->
                 <div class="card overflow-hidden">
                     <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/gintonicgold.jpg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
                     <div class="card-content">
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-xl cocktail-name">Golden Gin Tonic <span class="text-base font-normal">(zafferano)</span></h3>
+                            <h3 class="text-xl cocktail-name">
+                                Golden Gin Tonic 
+                                <span class="text-base font-normal" data-lang="it">(zafferano)</span>
+                                <span class="text-base font-normal hidden" data-lang="en">(saffron)</span>
+                            </h3>
                             <span class="text-lg cocktail-price">€ 9,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Gin, Tonica, Zafferano
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Gin, Tonica, Zafferano</span>
+                            <span data-lang="en" class="hidden">Gin, Tonic Water, Saffron</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Gin Tonic allo zafferano', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('golden-gin-tonic', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-golden-gin-tonic" class="cocktail-description">
+                            <p data-lang="it">Lasciati conquistare da una variante preziosa del classico Gin Tonic con gin infuso con pregiato zafferano Toscano, coltivato sulle pendici del Monte Amiata. Il metodo di infusione lento preserva l'aroma intenso e il colore dorato della spezia, che si sposa perfettamente con le note botaniche del gin e la freschezza della tonica premium. Un’esperienza sensoriale che racchiude l’essenza più pura della nostra terra.</p>
+                            <p data-lang="en" class="hidden">Let yourself be captivated by a precious twist on the classic Gin Tonic, featuring gin infused with exquisite Tuscan saffron, grown on the slopes of Mount Amiata. Our slow-infusion method preserves the spice's intense aroma and golden hue, which pairs perfectly with the gin’s botanical notes and the crispness of premium tonic water. A sensory experience that captures the purest essence of our land.</p>
+                        </div>
                     </div>
                 </div>
                 <!-- Negroni Sbagliato -->
@@ -320,12 +389,19 @@
                             <span class="text-lg cocktail-price">€ 7,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Spumante, Campari, Vermouth Rosso
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Spumante, Campari, Vermouth Rosso</span>
+                            <span data-lang="en" class="hidden">Sparkling Wine, Campari, Sweet Vermouth</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Negroni Sbagliato', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('negroni-sbagliato', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-negroni-sbagliato" class="cocktail-description">
+                            <p data-lang="it">Nato per errore a Milano negli anni '70 al Bar Basso. Si racconta che il barista, per sbaglio, prese una bottiglia di spumante invece che di gin. Questo 'sbaglio' fortunato ha dato vita a un cocktail più leggero e frizzante, amatissimo.</p>
+                            <p data-lang="en" class="hidden">Born by mistake in Milan in the 1970s at Bar Basso. The story goes that the bartender accidentally grabbed a bottle of sparkling wine instead of gin. This fortunate 'mistake' gave birth to a lighter, more sparkling, and much-loved cocktail.</p>
+                        </div>
                     </div>
                 </div>
                 <!-- Sex on The Beach 
@@ -354,35 +430,47 @@
                             <span class="text-lg cocktail-price">€ 7,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Gin, Succo di Limone, Sciroppo di Zucchero, Soda
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Gin, Succo di Limone, Sciroppo di Zucchero, Soda</span>
+                            <span data-lang="en" class="hidden">Gin, Lemon Juice, Simple Syrup, Soda Water</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Gin Fizz', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
+                        <button class="discover-button" onclick="toggleDescription('gin-fizz', this)">
+                            <span data-lang="it">Scopri di più ✨</span>
+                            <span data-lang="en" class="hidden">Discover more ✨</span>
                         </button>
-                        <p class="cocktail-description hidden"></p>
+                        <div id="desc-gin-fizz" class="cocktail-description">
+                            <p data-lang="it">Un classico dell'epoca del Proibizionismo, il Gin Fizz è un cocktail fresco e spumoso. La sua caratteristica 'fizz' (effervescenza) è data dalla soda, mentre l'albume (spesso usato nella ricetta tradizionale) crea una schiuma vellutata in superficie.</p>
+                            <p data-lang="en" class="hidden">A classic from the Prohibition era, the Gin Fizz is a fresh and frothy cocktail. Its characteristic 'fizz' comes from the soda water, while egg white (often used in the traditional recipe) creates a velvety foam on top.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="mb-10">
-            <h2 class="text-3xl font-bold section-title">Cocktail Analcolici</h2>
+            <h2 class="text-3xl font-bold section-title">
+                <span data-lang="it">Cocktail Analcolici</span>
+                <span data-lang="en" class="hidden">Non-Alcoholic Cocktails</span>
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Analcolico alla frutta -->
                 <div class="card overflow-hidden">
                     <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/analcolicoallafrutta.jpg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
                     <div class="card-content">
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-xl cocktail-name">Analcolico alla frutta</h3>
+                            <h3 class="text-xl cocktail-name">
+                                <span data-lang="it">Analcolico alla frutta</span>
+                                <span data-lang="en" class="hidden">Fruit Mocktail</span>
+                            </h3>
                             <span class="text-lg cocktail-price">€ 7,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Ingredienti:</span> Succhi di frutta misti, Sciroppo, Soda (8,12)
+                            <span class="font-medium" data-lang="it">Ingredienti:</span>
+                            <span class="font-medium hidden" data-lang="en">Ingredients:</span>
+                            <span data-lang="it">Succhi di frutta misti, Sciroppo, Soda (8,12)</span>
+                            <span data-lang="en" class="hidden">Mixed Fruit Juices, Syrup, Soda Water (8,12)</span>
                         </p>
-                        <button class="discover-button" onclick="getGeminiInfo('Analcolico alla frutta', this)">
-                            Scopri di più ✨ <span class="loading-spinner hidden"></span>
-                        </button>
-                        <p class="cocktail-description hidden"></p>
                     </div>
                 </div>
             </div>
@@ -390,7 +478,10 @@
 
         <!-- Nuova Sezione Taglieri -->
         <section class="mb-10">
-            <h2 class="text-3xl font-bold section-title">I Nostri Taglieri</h2>
+            <h2 class="text-3xl font-bold section-title">
+                <span data-lang="it">I Nostri Taglieri</span>
+                <span data-lang="en" class="hidden">Our Cold Cuts Boards</span>
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Tagliere Salumi 
                 <div class="card overflow-hidden">
@@ -423,11 +514,17 @@
                     <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/taglieremisto.jpg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
                     <div class="card-content">
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-xl cocktail-name">Tagliere Misto Bellavista</h3>
+                            <h3 class="text-xl cocktail-name">
+                                <span data-lang="it">Tagliere Misto Bellavista</span>
+                                <span data-lang="en" class="hidden">Bellavista Mixed Board</span>
+                            </h3>
                             <span class="text-lg cocktail-price">€19,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Descrizione:</span> Un assaggio completo dei nostri migliori salumi e formaggi, miele, prosciutto, salsiccia, schiaccia e olive. (1,3,5,7,8,12)
+                            <span class="font-medium" data-lang="it">Descrizione:</span>
+                            <span class="font-medium hidden" data-lang="en">Description:</span>
+                            <span data-lang="it">Un assaggio completo dei nostri migliori salumi e formaggi, miele, prosciutto, salsiccia, schiaccia e olive. (1,3,5,7,8,12)</span>
+                            <span data-lang="en" class="hidden">A complete tasting of our best cold cuts and cheeses, honey, prosciutto, sausage, flatbread, and olives. (1,3,5,7,8,12)</span>
                         </p>
                     </div>
                 </div>
@@ -436,11 +533,17 @@
                     <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/taglieremisto.jpg?raw=true"" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
                     <div class="card-content">
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-xl cocktail-name">Tagliere Grande Bellavista</h3>
+                            <h3 class="text-xl cocktail-name">
+                                <span data-lang="it">Tagliere Grande Bellavista</span>
+                                <span data-lang="en" class="hidden">Bellavista Large Board</span>
+                            </h3>
                             <span class="text-lg cocktail-price">€25,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Descrizione:</span> Un assaggio completo dei nostri migliori salumi e formaggi, miele e marmellata, prosciutto, salsiccia, schiaccia e olive, cipolline, bruschette e taralli. (1,3,5,7,8,12)
+                            <span class="font-medium" data-lang="it">Descrizione:</span>
+                            <span class="font-medium hidden" data-lang="en">Description:</span>
+                            <span data-lang="it">Un assaggio completo dei nostri migliori salumi e formaggi, miele e marmellata, prosciutto, salsiccia, schiaccia e olive, cipolline, bruschette e taralli. (1,3,5,7,8,12)</span>
+                            <span data-lang="en" class="hidden">A complete tasting of our best cold cuts and cheeses, honey and jam, prosciutto, sausage, flatbread and olives, pickled onions, bruschetta, and taralli. (1,3,5,7,8,12)</span>
                         </p>
                     </div>
                 </div>
@@ -449,94 +552,130 @@
                     <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/taglierevegetariano.jpg?raw=true" alt="" class="cocktail-image" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
                     <div class="card-content">
                         <div class="flex justify-between items-baseline mb-1">
-                            <h3 class="text-xl cocktail-name">Tagliere Vegetariano</h3>
+                            <h3 class="text-xl cocktail-name">
+                                <span data-lang="it">Tagliere Vegetariano</span>
+                                <span data-lang="en" class="hidden">Vegetarian Board</span>
+                            </h3>
                             <span class="text-lg cocktail-price">€19,00</span>
                         </div>
                         <p class="cocktail-ingredients">
-                            <span class="font-medium">Descrizione:</span> Selezione di verdure grigliate di stagione, formaggi freschi, olive, schiaccia e bruschette. (1,3,5,7,8,12)
+                            <span class="font-medium" data-lang="it">Descrizione:</span>
+                            <span class="font-medium hidden" data-lang="en">Description:</span>
+                            <span data-lang="it">Selezione di verdure grigliate di stagione, formaggi freschi, olive, schiaccia e bruschette. (1,3,5,7,8,12)</span>
+                            <span data-lang="en" class="hidden">Selection of seasonal grilled vegetables, fresh cheeses, olives, flatbread, and bruschetta. (1,3,5,7,8,12)</span>
                         </p>
                     </div>
                 </div>
             </div>
             <br><br>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-            <h2 class="text-2xl font-bold section-title">Le immagini sono solo illustrative pertanto l'aspetto dei taglieri e delle bevande puo' differire.</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6"></div><br><br><br><br>
-            <h2 class="text-2xl center font-bold section-title">Lista Allergeni:</h2>
-            <img src="https://github.com/xXSuperDesXx/cocktailmenubellavista/blob/main/immagini/listallergeni.png?raw=true" alt="Lista Allergeni" class="w-full h-auto rounded-md mb-4" onerror="this.src='https://placehold.co/600x400/E2E8F0/A0AEC0?text=Immagine+non+disponibile'; this.onerror=null;">
+            <h2 class="text-2xl font-bold section-title">
+                <span data-lang="it">Le immagini sono solo illustrative pertanto l'aspetto dei taglieri e delle bevande puo' differire.</span>
+                <span data-lang="en" class="hidden">Images are for illustrative purposes only, therefore the appearance of the boards and drinks may vary.</span>
+            </h2>
         </section>
 
+        <!-- Sezione Allergeni -->
+        <section class="mb-10">
+            <h2 class="text-3xl font-bold section-title">
+                <span data-lang="it">Lista Allergeni</span>
+                <span data-lang="en" class="hidden">Allergen List</span>
+            </h2>
+            <div class="card">
+                <div class="card-content text-green-800">
+                    <div data-lang="it">
+                        <p class="mb-4">I numeri tra parentesi vicino agli ingredienti si riferiscono alla seguente lista di allergeni, in conformità con il Reg. UE 1169/2011.</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li><strong>Cereali contenenti glutine</strong> cioè grano, segale, orzo, avena, farro, kamut o i loro ceppi ibridati e prodotti derivati.</li>
+                            <li><strong>Crostacei</strong> e prodotti a base di crostacei.</li>
+                            <li><strong>Uova</strong> e prodotti a base di uova.</li>
+                            <li><strong>Pesce</strong> e prodotti a base di pesce.</li>
+                            <li><strong>Arachidi</strong> e prodotti a base di arachidi.</li>
+                            <li><strong>Soia</strong> e prodotti a base di soia.</li>
+                            <li><strong>Latte</strong> e prodotti a base di latte (incluso lattosio).</li>
+                            <li><strong>Frutta a guscio</strong>, vale a dire: mandorle, nocciole, noci, noci di acagiù, noci di pecan, noci del Brasile, pistacchi, noci macadamia o noci del Queensland, e i loro prodotti.</li>
+                            <li><strong>Sedano</strong> e prodotti a base di sedano.</li>
+                            <li><strong>Senape</strong> e prodotti a base di senape.</li>
+                            <li><strong>Semi di sesamo</strong> e prodotti a base di semi di sesamo.</li>
+                            <li><strong>Anidride solforosa e solfiti</strong> in concentrazioni superiori a 10 mg/kg o 10 mg/litro in termini di SO2 totale.</li>
+                            <li><strong>Lupini</strong> e prodotti a base di lupini.</li>
+                            <li><strong>Molluschi</strong> e prodotti a base di molluschi.</li>
+                        </ol>
+                    </div>
+                    <div data-lang="en" class="hidden">
+                        <p class="mb-4">The numbers in parentheses next to the ingredients refer to the following list of allergens, in accordance with EU Regulation 1169/2011.</p>
+                        <ol class="list-decimal list-inside space-y-2">
+                            <li><strong>Cereals containing gluten</strong>, namely: wheat, rye, barley, oats, spelt, kamut or their hybridised strains and products thereof.</li>
+                            <li><strong>Crustaceans</strong> and products thereof.</li>
+                            <li><strong>Eggs</strong> and products thereof.</li>
+                            <li><strong>Fish</strong> and products thereof.</li>
+                            <li><strong>Peanuts</strong> and products thereof.</li>
+                            <li><strong>Soya</strong> and products thereof.</li>
+                            <li><strong>Milk</strong> and products thereof (including lactose).</li>
+                            <li><strong>Nuts</strong>, namely: almonds, hazelnuts, walnuts, cashews, pecan nuts, Brazil nuts, pistachios, macadamia or Queensland nuts, and products thereof.</li>
+                            <li><strong>Celery</strong> and products thereof.</li>
+                            <li><strong>Mustard</strong> and products thereof.</li>
+                            <li><strong>Sesame seeds</strong> and products thereof.</li>
+                            <li><strong>Sulphur dioxide and sulphites</strong> at concentrations of more than 10 mg/kg or 10 mg/litre in terms of the total SO2.</li>
+                            <li><strong>Lupin</strong> and products thereof.</li>
+                            <li><strong>Molluscs</strong> and products thereof.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <footer class="text-center text-green-700 text-sm mt-10 pb-6">
-            <p>&copy; 2025 Agriturismo Bellavista. Tutti i diritti riservati.</p>
+            <p data-lang="it">&copy; 2025 Agriturismo Bellavista. Tutti i diritti riservati.</p>
+            <p data-lang="en" class="hidden">&copy; 2025 Agriturismo Bellavista. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
-        // Funzione per ottenere informazioni sui cocktail tramite l'API Gemini
-        async function getGeminiInfo(cocktailName, buttonElement) {
-            const descriptionElement = buttonElement.nextElementSibling; // Il paragrafo della descrizione è il fratello successivo del pulsante
-            const spinner = buttonElement.querySelector('.loading-spinner');
+        let currentLang = 'it';
 
-            // Nascondi la descrizione precedente e mostra lo spinner
-            descriptionElement.classList.add('hidden');
-            descriptionElement.textContent = '';
-            spinner.classList.remove('hidden');
-            buttonElement.disabled = true; // Disabilita il pulsante durante il caricamento
-
-            try {
-                // *** IMPORTANTE: INSERISCI QUI LA TUA API KEY DI GEMINI ***
-                // La tua API key è stata inserita qui, ma assicurati che sia corretta e attiva.
-                const apiKey = "AIzaSyDovv4yPViuYDZfekDXt8lit57z2Tt7T6g"; 
-
-                if (!apiKey || apiKey === "YOUR_GEMINI_API_KEY_HERE") { 
-                    descriptionElement.textContent = 'Errore: API Key di Gemini non configurata. Inserisci la tua chiave API nel codice JavaScript.';
-                    descriptionElement.classList.remove('hidden');
-                    console.error('API Key di Gemini mancante o non valida.');
-                    spinner.classList.add('hidden');
-                    buttonElement.disabled = false;
-                    return; 
-                }
-
-                let chatHistory = [];
-                const prompt = `Fornisci una breve curiosità, una storia o una descrizione interessante sul cocktail "${cocktailName}". Sii conciso e coinvolgente. Rispondi in italiano. Limita la risposta a 2-3 frasi.`;
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-
-                const payload = { contents: chatHistory };
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    descriptionElement.textContent = text;
-                    descriptionElement.classList.remove('hidden'); // Mostra la descrizione
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                if (el.getAttribute('data-lang') === lang) {
+                    el.classList.remove('hidden');
                 } else {
-                    descriptionElement.textContent = 'Non è stato possibile recuperare informazioni per questo cocktail. Controlla la console per i dettagli (potrebbe essere un problema di API Key o CORS).';
-                    descriptionElement.classList.remove('hidden');
-                    console.error('Risposta API Gemini inattesa:', result);
+                    el.classList.add('hidden');
                 }
-            } catch (error) {
-                descriptionElement.textContent = 'Si è verificato un errore durante il recupero delle informazioni. Controlla la console per i dettagli (potrebbe essere un problema di rete o CORS).';
-                descriptionElement.classList.remove('hidden');
-                console.error('Errore durante la chiamata API Gemini:', error);
-            } finally {
-                spinner.classList.add('hidden'); // Nascondi lo spinner
-                buttonElement.disabled = false; // Riabilita il pulsante
+            });
+
+            // Resetta le descrizioni dei cocktail quando si cambia lingua
+            document.querySelectorAll('.cocktail-description.visible').forEach(el => {
+                el.classList.remove('visible');
+            });
+
+            const btnIt = document.getElementById('btn-lang-it');
+            const btnEn = document.getElementById('btn-lang-en');
+
+            if (lang === 'it') {
+                btnIt.className = "px-5 py-2 bg-green-600 text-white rounded-full font-semibold shadow transition duration-300 ease-in-out focus:outline-none";
+                btnEn.className = "px-5 py-2 bg-green-100 text-green-800 rounded-full font-semibold shadow transition duration-300 ease-in-out hover:bg-green-200 focus:outline-none";
+            } else {
+                btnEn.className = "px-5 py-2 bg-green-600 text-white rounded-full font-semibold shadow transition duration-300 ease-in-out focus:outline-none";
+                btnIt.className = "px-5 py-2 bg-green-100 text-green-800 rounded-full font-semibold shadow transition duration-300 ease-in-out hover:bg-green-200 focus:outline-none";
+            }
+        }
+
+        // Funzione per mostrare/nascondere la descrizione del cocktail
+        function toggleDescription(cocktailId, buttonElement) {
+            // Nascondi tutte le altre descrizioni aperte
+            document.querySelectorAll('.cocktail-description.visible').forEach(desc => {
+                if (desc.id !== `desc-${cocktailId}`) {
+                    desc.classList.remove('visible');
+                }
+            });
+
+            const descriptionElement = document.getElementById(`desc-${cocktailId}`);
+            if (descriptionElement) {
+                descriptionElement.classList.toggle('visible');
             }
         }
     </script>
 </body>
 </html>
-
-
-
-
